@@ -1,0 +1,12 @@
+Project Stuff
+
+What it should do:
+- Show open/closed spots
+	- Show type of spot (Employee, Commuter, [Road] / [Nonspot]
+	
+	E E E E E E E E E E S S S S S S S S
+	R R R R R R R R R R R R R R R R R R
+	R R R R R R R R R R R R R R R R R R
+	S S S S S S S S S S S S S S S S N N
+	
+- Interface to pick/unpick spot
