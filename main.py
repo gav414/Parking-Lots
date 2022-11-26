@@ -1,25 +1,31 @@
 # Main Python Code
 
 class ParkingLot:
+
+    
     def __init__(self, row, col, amount):
         self.row = row
         self.col = col
         self.amount = amount
+        self.lotList = []
+    
+    enableDebug = True
+    def debugPrint(self, thing):
+        if (self.enableDebug):
+            print(f"<<DEBUG>>: {thing}")
         
     def makeArray(self):
-        lotCol = []
-        lotRow = []
-        
+    
+        #Add desired number of rows
         for i in range(self.row):
-            for j in range(self.col):
-                lotCol.append('X')
-                print(f"col in j loop={lotCol}")
-            lotRow.append(lotCol)
-            print(f"row after append={lotRow}")
-            lotCol.clear()
-            print(f"col after j loop before i loop={lotCol}")
+            #Add a new row (list)
+            self.lotList.append([])
             
-        print(lotRow)
+            #Add desired number of columns  
+            for j in range(self.col):
+                self.lotList[i].append([])
+        
+        self.debugPrint(self.lotList)
     
     def selectSpot(self):
         spot = str(input("Please select a spot: "))
@@ -33,4 +39,4 @@ class ParkingLot:
 
 coolLot = ParkingLot(9, 8, 10)
 
-coolLot.selectSpot()
+coolLot.makeArray()
