@@ -8,14 +8,25 @@ class ParkingLot:
         self.col = col
         self.amount = amount
         self.lotList = []
+        
+        #Generate lot 2D list
+        self.makeLotList()
     
     enableDebug = True
     def debugPrint(self, thing):
+        '''
+        Prints a debug print-out, if enableDebug is True.
+            Parameters:
+                thing (Object): Any Python object to print out
+        '''
         if (self.enableDebug):
             print(f"<<DEBUG>>: {thing}")
         
-    def makeArray(self):
-    
+    def makeLotList(self):
+        '''
+        Generate an 2D List that serves as a visual representation of the Parking Lot object.
+        Used internally.
+        '''
         #Add desired number of rows
         for i in range(self.row):
             #Add a new row (list)
@@ -28,6 +39,10 @@ class ParkingLot:
         self.debugPrint(self.lotList)
     
     def selectSpot(self):
+        '''
+        Prompts the user to select a parking spot based on the lot's visual representation. Breaks
+        the input into a char (index 0) and integer (index 1).
+        '''
         spot = str(input("Please select a spot: "))
         spotRow = spot[0]
         spotCol = spot[1]
@@ -38,5 +53,3 @@ class ParkingLot:
         pass
 
 coolLot = ParkingLot(9, 8, 10)
-
-coolLot.makeArray()
