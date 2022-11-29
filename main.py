@@ -61,7 +61,7 @@ class ParkingLot:
         
         self.debugPrint(self.lotList)
     
-    def selectSpot(self):
+    def selectSpot(self,mode):
         '''
         Prompts the user to select a parking spot based on the lot's visual representation. Breaks
         the input into a char (index 0) and integer (index 1).
@@ -70,18 +70,31 @@ class ParkingLot:
         spotRow = spot[0]
         spotCol = spot[1]
         print(f"spotRow={spotRow} and spotCol={spotCol}")
-        print(self.isTaken(spotRow, spotCol))
+        #print(self.isTaken(spotRow, spotCol))
+        if (self.isTaken(spotRow, spotCol)):
+            if mode == "SELECT":
+                self.lotList[int(spotCol)-1][self.getRowInt(spotRow)] = "X"
+            
         
-    def isTaken(self, spotRow, spotCol):
+    def getRowInt(self, spotRow):
         for i in range(len(self.strTopRow)):
             if self.strTopRow[i] == spotRow:
                 rowIndex = i
-        if self.lotList[rowIndex][int(spotCol)] == "O":
-            return True
+                return rowIndex
+    def isTaken(self, spotRow, spotCol):
+        self.debugPrint(f"spotRow={self.getRowInt(spotRow)} and self.col={self.col}")
+        if (self.getRowInt(spotRow)+1 <= self.col):
+            rowIndex = self.getRowInt(spotRow)
+            if self.lotList[int(spotCol)-1][rowIndex] == "O":
+                return True
+            else:
+                return False
         else:
-            return False
+            print("ERROR: This spot doesn't exist. Please select another spot.")
+            return False;
 
 coolLot = ParkingLot(9, 8, 10)
 
 print(coolLot)
-coolLot.selectSpot()
+coolLot.selectSpot("SELECT")
+print(coolLot)
