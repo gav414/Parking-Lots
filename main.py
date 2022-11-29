@@ -1,16 +1,37 @@
 # Main Python Code
 
 class ParkingLot:
-
+    
     
     def __init__(self, row, col, amount):
         self.row = row
         self.col = col
         self.amount = amount
         self.lotList = []
+        self.charIsTaken = "X"
+        self.charIsOpen = "O"
+        self.charIsEmployee = "E"
         
         #Generate lot 2D list
         self.makeLotList()
+        
+    def __str__(self):
+        self.strTopRow = "ABCDEFGHIJKLMNOPQRSTUVWXWZ"
+        strLot = "  "
+        
+        #Write the column header based on how many columns we got
+        for i in range(self.col):
+            strLot += self.strTopRow[i] + " "
+        strLot += "\n"
+        
+        #Write the row header and rows
+        for i in range(self.row):
+            strLot += str(i+1) + " "
+            for j in range(self.col):
+                strLot += self.lotList[i][j] + " "
+            strLot += "\n"
+                    
+        return strLot
     
     enableDebug = True
     def debugPrint(self, thing):
@@ -21,7 +42,9 @@ class ParkingLot:
         '''
         if (self.enableDebug):
             print(f"<<DEBUG>>: {thing}")
-        
+    
+    
+    
     def makeLotList(self):
         '''
         Generate an 2D List that serves as a visual representation of the Parking Lot object.
@@ -34,7 +57,7 @@ class ParkingLot:
             
             #Add desired number of columns  
             for j in range(self.col):
-                self.lotList[i].append([])
+                self.lotList[i].append(self.charIsOpen)
         
         self.debugPrint(self.lotList)
     
@@ -47,9 +70,18 @@ class ParkingLot:
         spotRow = spot[0]
         spotCol = spot[1]
         print(f"spotRow={spotRow} and spotCol={spotCol}")
-        #isTaken(spotRow, spotCol)
+        print(self.isTaken(spotRow, spotCol))
         
     def isTaken(self, spotRow, spotCol):
-        pass
+        for i in range(len(self.strTopRow)):
+            if self.strTopRow[i] == spotRow:
+                rowIndex = i
+        if self.lotList[rowIndex][int(spotCol)] == "O":
+            return True
+        else:
+            return False
 
 coolLot = ParkingLot(9, 8, 10)
+
+print(coolLot)
+coolLot.selectSpot()
