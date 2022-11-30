@@ -31,20 +31,19 @@ class ParkingLot:
         Determines whether a given spot, as passed in, is available to take.
     '''
     
-    def __init__(self, row, col, amount):
+    def __init__(self, row, col, name):
         self.row = row
         self.col = col
-        self.amount = amount
+        self.name = name
         self.lotList = []
         self.charIsTaken = "X"
         self.charIsOpen = "O"
         self.charIsEmployee = "E"
-        
+        self.strTopRow = "ABCDEFGHIJKLMNOPQRSTUVWXWZ"
         #Generate lot 2D list
         self.makeLotList()
         
     def __str__(self):
-        self.strTopRow = "ABCDEFGHIJKLMNOPQRSTUVWXWZ"
         strLot = "  "
         
         #Write the column header based on how many columns we got
@@ -105,10 +104,13 @@ class ParkingLot:
         spotRow = spot[1]
         print(f"spotCol={spotCol} and spotRow={spotRow}")
         #print(self.isTaken(spotRow, spotCol))
-        if not (self.isTaken(spotCol, spotRow)):
-            if mode == "SELECT":
+        if mode == "SELECT":
+            if not (self.isTaken(spotCol, spotRow)):
                 self.lotList[int(spotRow)-1][self.getColInt(spotCol)] = "X"
-            #TODO: Implement mode UNSELECT (see docstring)
+        if mode == "UNSELECT":
+            if (self.isTaken(spotCol, spotRow)):
+                self.lotList[int(spotRow)-1][self.getColInt(spotCol)] = "O"
+            
         
     def getColInt(self, spotCol):
         '''
@@ -151,8 +153,40 @@ class ParkingLot:
             print("ERROR: This spot doesn't exist. Please select another spot.")
             return True;
 
-coolLot = ParkingLot(9, 8, 10)
+    def editLot(self, spotCol, spotRow, spotType):
+        if isTaken(spotCol, spotRow):
+            self.lotList[spotRow][spotCol] = spotType
+        else:
+            print("Invalid spot.")
 
-print(coolLot)
-coolLot.selectSpot("SELECT")
-print(coolLot)
+pList = []
+while True:
+    question = input("Would you like to create a new parking lot? ")
+    if question.lower() == "yes":
+        row = int(input("How long would you like the parking lot? "))
+        col = int(input("How many columns would you like your parking lot to have? "))
+        lotName = input("What would you like to name the lot? ")
+        newLot = ParkingLot(row, col, lotName)
+        pList.append(newLot)
+    elif question.lower() == "no":
+        break
+    else:
+        print("Invalid answer")
+        print(pList)
+    
+while True:
+    currentLotName = input("Which lot would you like to bring up? ")
+    for i in range(0, len(pList)):
+        if currentLotName == pList[i].name:
+            currentLot = pList[i]
+            print(currentLot)
+            answer = input("Select spot \nUnselect spot \nQuit \nWhat would you like to do? ")
+            if answer.lower() == "select spot":
+                currentLot.selectSpot("SELECT")
+            elif answer.lower() == "unselect spot":
+                currentLot.selectSpot("UNSELECT")
+            elif answer.lower() == "quit":
+                break
+        print("Not an acceptable answer")
+    print("Not a name for a parking lot")
+
