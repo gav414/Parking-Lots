@@ -105,7 +105,7 @@ class ParkingLot:
         spotRow = spot[1]
         print(f"spotCol={spotCol} and spotRow={spotRow}")
         #print(self.isTaken(spotRow, spotCol))
-        if (self.isTaken(spotCol, spotRow)):
+        if not (self.isTaken(spotCol, spotRow)):
             if mode == "SELECT":
                 self.lotList[int(spotRow)-1][self.getColInt(spotCol)] = "X"
             #TODO: Implement mode UNSELECT (see docstring)
@@ -127,8 +127,6 @@ class ParkingLot:
                 colIndex = i
                 return colIndex
                 
-    #TODO: I think the wording suggests the opposite return statement
-    #   I'm too tired to think about it tho lmao
     def isTaken(self, spotCol, spotRow): 
         '''
         Determines whether a given spot, as passed in, is available to take.
@@ -146,12 +144,12 @@ class ParkingLot:
         if (self.getColInt(spotCol)+1 <= self.col):
             colIndex = self.getColInt(spotCol)
             if self.lotList[int(spotRow)-1][colIndex] == "O":
-                return True
-            else:
                 return False
+            else:
+                return True
         else:
             print("ERROR: This spot doesn't exist. Please select another spot.")
-            return False;
+            return True;
 
 coolLot = ParkingLot(9, 8, 10)
 
