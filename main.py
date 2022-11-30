@@ -24,12 +24,14 @@ class ParkingLot:
     selectSpot(mode):
         Prompts the user to select a parking spot based on the lot's visual 
         representation.
-    getColInt(self, spotCol):
+    getColInt(spotCol):
         Gets the integer value of the column based on the letter passed into the
         program.
-    isTaken(self, spotCol, spotRow):
+    doesPositionExist(spotCol, spotRow):
+        Determines whether a position exists in the parking lot.
+    isTaken(spotCol, spotRow):
         Determines whether a given spot, as passed in, is available to take.
-    editLot(self, spotCol, spotRow, spotType):
+    editLot():
         Specify where certain elements are in a parking lot, including
         employee spots, non-spots, or roads.
     '''
@@ -136,6 +138,15 @@ class ParkingLot:
                 return colIndex
 
     def doesPositionExist(self, spotCol, spotRow):
+        '''
+        Determines whether a position exists in the parking lot.
+            Paramters:
+                spotCol (String): Letter representing the desired column
+                spotRow (int): Integer representing the desired row
+            Returns:
+                True if the spot exists
+                False if the spot does not exist
+        '''
         if ((self.getColInt(spotCol)+1 <= self.col) and (int(spotRow) <= self.row)):
             return True
         else:
@@ -151,8 +162,8 @@ class ParkingLot:
                 spotCol (String): Letter representing the desired column
                 spotRow (int): Integer representing the desired row
             Returns:
-                True if spot is considered open
-                False if spot is considered taken or unavailable
+                False if spot is considered open
+                True if spot is considered taken or unavailable
         '''
         self.debugPrint(f"spotCol={self.getColInt(spotCol)} and self.row={self.row}")
         if self.doesPositionExist(spotCol, spotRow):
