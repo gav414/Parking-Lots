@@ -11,8 +11,8 @@ class ParkingLot:
         The number of rows the parking lot should have
     col: int
         The number of columns the parking lot should have
-    amount: int
-        I don't know either. TODO: Wtf is amount lmaoooo
+    name: int
+        The name of the parking lot.
     
     Methods
     -------
@@ -29,6 +29,9 @@ class ParkingLot:
         program.
     isTaken(self, spotCol, spotRow):
         Determines whether a given spot, as passed in, is available to take.
+    editLot(self, spotCol, spotRow, spotType):
+        Specify where certain elements are in a parking lot, including
+        employee spots, non-spots, or roads.
     '''
     
     def __init__(self, row, col, name):
@@ -154,6 +157,13 @@ class ParkingLot:
             return True;
 
     def editLot(self, spotCol, spotRow, spotType):
+        '''
+        Specify where certain elements are in a parking lot, including
+        employee spots, non-spots, or roads.
+            Parameters:
+                spotCol(String): Letter representing the desired coulumn
+                spotRow(int): Integer representing the desired row
+        '''
         if isTaken(spotCol, spotRow):
             self.lotList[spotRow][spotCol] = spotType
         else:
