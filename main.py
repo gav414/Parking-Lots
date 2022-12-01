@@ -44,7 +44,7 @@ class ParkingLot:
         self.charIsTaken = "X"
         self.charIsOpen = "O"
         self.charIsEmployee = "E"
-        self.strTopRow = "ABCDEFGHIJKLMNOPQRSTUVWXWZ"
+        self.strTopRow = "ABCDEFGHIJKLMNOPQRSTUVWXWZ1234567890!@#$%^&*()-_=+{}[]:;'/?.,<>"
         #Generate lot 2D list
         self.makeLotList()
         
@@ -53,7 +53,7 @@ class ParkingLot:
         strLot += self.name + '\n'
         for i in range(len(self.name)):
             strLot += '-'
-        strLot += '\n  '
+        strLot += '\n   '
         #Write the column header based on how many columns we got
         for i in range(self.col):
             strLot += self.strTopRow[i] + " "
@@ -61,6 +61,8 @@ class ParkingLot:
         
         #Write the row header and rows
         for i in range(self.row):
+            if (i < 9):
+                strLot+= " "
             strLot += str(i+1) + " "
             for j in range(self.col):
                 strLot += self.lotList[i][j] + " "
@@ -68,7 +70,7 @@ class ParkingLot:
                     
         return strLot
     
-    enableDebug = False
+    enableDebug = True
     def debugPrint(self, thing):
         '''
         Prints a debug print-out, if enableDebug is True.
@@ -109,7 +111,13 @@ class ParkingLot:
         '''
         spot = str(input("Please select a spot: "))
         spotCol = spot[0]
-        spotRow = spot[1]
+        
+        if len(spot) > 2:
+            spotRow = spot[1:3]
+            self.debugPrint(f"spotRow={spotRow}")
+        else:
+            spotRow = spot[1]
+        #spotRow = spot[1]
         if mode == "SELECT":
             if not (self.isTaken(spotCol, spotRow)):
                 self.lotList[int(spotRow)-1][self.getColInt(spotCol)] = "X"
