@@ -185,9 +185,9 @@ class ParkingLot:
         self.debugPrint(f"spotCol={self.getColInt(spotCol)} and self.row={self.row}")
         if self.doesPositionExist(spotCol, spotRow):
             colIndex = self.getColInt(spotCol)
-            if self.lotList[int(spotRow)-1][colIndex] == "O":
+            if self.lotList[int(spotRow)-1][colIndex] == "O" or self.lotList[int(spotRow)-1][colIndex] == "E":
                 return False
-            else:
+            elif self.lotList[int(spotRow)-1][colIndex] == "X":
                 return True
         else:
             print("ERROR: This spot doesn't exist. Please select another spot.")
