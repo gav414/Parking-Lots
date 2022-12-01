@@ -70,7 +70,7 @@ class ParkingLot:
                     
         return strLot
     
-    enableDebug = True
+    enableDebug = False
     def debugPrint(self, thing):
         '''
         Prints a debug print-out, if enableDebug is True.
@@ -218,7 +218,6 @@ while True:
         break
     else:
         print("Invalid answer")
-        print(pList)
     
 while True:
     currentLotName = input("Which lot would you like to bring up or would you like to quit? ")
