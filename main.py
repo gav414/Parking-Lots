@@ -109,23 +109,29 @@ class ParkingLot:
                     select a spot that is open. If mode is "UNSELECT," the
                     user is trying to mark a spot that is taken as available.
         '''
-        spot = str(input("Please select a spot: "))
+        doFunction = True
+        spot = str(input("Please select a spot: ")).upper()
         spotCol = spot[0]
         
         if len(spot) > 2:
             spotRow = spot[1:3]
             self.debugPrint(f"spotRow={spotRow}")
-        else:
+        elif len(spot) == 2:
             spotRow = spot[1]
-        #spotRow = spot[1]
-        if mode == "SELECT":
-            if not (self.isTaken(spotCol, spotRow)):
-                self.lotList[int(spotRow)-1][self.getColInt(spotCol)] = "X"
-            else:
-                print("Cannot park in this spot")
-        if mode == "UNSELECT":
-            if (self.isTaken(spotCol, spotRow)):
-                self.lotList[int(spotRow)-1][self.getColInt(spotCol)] = "O"
+        else:
+            print("Input couldn't be understood.")
+            doFunction = False
+        try:
+            if mode == "SELECT" and doFunction:
+                if not (self.isTaken(spotCol, spotRow)):
+                    self.lotList[int(spotRow)-1][self.getColInt(spotCol)] = "X"
+                else:
+                    print("Cannot park in this spot")
+            if mode == "UNSELECT" and doFunction:
+                if (self.isTaken(spotCol, spotRow)):
+                    self.lotList[int(spotRow)-1][self.getColInt(spotCol)] = "O"
+        except:
+            print("Input couldn't be understood")
             
         
     def getColInt(self, spotCol):
@@ -155,9 +161,12 @@ class ParkingLot:
                 True if the spot exists
                 False if the spot does not exist
         '''
-        if ((self.getColInt(spotCol)+1 <= self.col) and (int(spotRow) <= self.row)):
-            return True
-        else:
+        try:
+            if ((self.getColInt(spotCol)+1 <= self.col) and (int(spotRow) <= self.row)):
+                return True
+            else:
+                return False
+        except:
             return False
                 
     def isTaken(self, spotCol, spotRow): 
@@ -192,11 +201,14 @@ class ParkingLot:
                 spotCol(String): Letter representing the desired coulumn
                 spotRow(int): Integer representing the desired row
         '''
-        spotCol = input("Which column would you like to edit? ")
+        spotCol = str(input("Which column would you like to edit? ")).upper()
         spotRow = int(input("Which row would you like to edit? "))
-        spotType = input("Would you like to change the spot to be empty (O), taken (X), or for employees (E)? ")
+        spotType = str(input("Would you like to change the spot to be empty (O), taken (X), or for employees (E)? ")).upper()
         if not self.isTaken(spotCol, spotRow):
-            self.lotList[spotRow - 1][self.getColInt(spotCol)] = spotType
+            if spotType == "O" or spotType == "X" or spotType == "E":
+                self.lotList[spotRow - 1][self.getColInt(spotCol)] = spotType
+            else:
+                print("Invalid spot type.")
         else:
             print("Invalid spot.")
 
@@ -204,8 +216,18 @@ pList = []
 while True:
     question = input("Would you like to create a new parking lot? ")
     if question.lower() == "yes":
-        row = int(input("How long would you like the parking lot? "))
-        col = int(input("How many columns would you like your parking lot to have? "))
+        while True:
+            row = int(input("How long would you like the parking lot to be? "))
+            if row > 99:
+                print("Your parking lot is too long. Please shrink it.\n")
+            else:
+                break
+        while True:
+            col = int(input("How wide would you like the parking lot to be? "))
+            if col > len("ABCDEFGHIJKLMNOPQRSTUVWXWZ1234567890!@#$%^&*()-_=+{}[]:;'/?.,<>"):
+                print("Your parking lot is too wide. Please shrink it.\n")
+            else:
+                break
         lotName = input("What would you like to name the lot? ")
         while True:
             if lotName.lower() == "quit":
