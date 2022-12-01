@@ -201,16 +201,19 @@ class ParkingLot:
                 spotCol(String): Letter representing the desired coulumn
                 spotRow(int): Integer representing the desired row
         '''
-        spotCol = str(input("Which column would you like to edit? ")).upper()
-        spotRow = int(input("Which row would you like to edit? "))
-        spotType = str(input("Would you like to change the spot to be empty (O), taken (X), or for employees (E)? ")).upper()
-        if not self.isTaken(spotCol, spotRow):
-            if spotType == "O" or spotType == "X" or spotType == "E":
-                self.lotList[spotRow - 1][self.getColInt(spotCol)] = spotType
+        try:
+            spotCol = str(input("Which column would you like to edit? ")).upper()
+            spotRow = int(input("Which row would you like to edit? "))
+            spotType = str(input("Would you like to change the spot to be empty (O), taken (X), or for employees (E)? ")).upper()
+            if not self.isTaken(spotCol, spotRow):
+                if spotType == "O" or spotType == "X" or spotType == "E":
+                    self.lotList[spotRow - 1][self.getColInt(spotCol)] = spotType
+                else:
+                    print("Invalid spot type.")
             else:
-                print("Invalid spot type.")
-        else:
-            print("Invalid spot.")
+                print("Invalid spot.")
+        except:
+            print("Input could not be understood")
 
 pList = []
 while True:
