@@ -70,7 +70,7 @@ class ParkingLot:
                     
         return strLot
     
-    enableDebug = False
+    enableDebug = True
     def debugPrint(self, thing):
         '''
         Prints a debug print-out, if enableDebug is True.
@@ -182,12 +182,12 @@ class ParkingLot:
                 False if spot is considered open
                 True if spot is considered taken or unavailable
         '''
-        self.debugPrint(f"spotCol={self.getColInt(spotCol)} and self.row={self.row}")
+        self.debugPrint(f"spotCol={self.getColInt(spotCol)} and spotRow={spotRow}")
         if self.doesPositionExist(spotCol, spotRow):
             colIndex = self.getColInt(spotCol)
-            if self.lotList[int(spotRow)-1][colIndex] == "O" or self.lotList[int(spotRow)-1][colIndex] == "E":
+            if self.lotList[int(spotRow)-1][colIndex] == "O":
                 return False
-            elif self.lotList[int(spotRow)-1][colIndex] == "X":
+            elif self.lotList[int(spotRow)-1][colIndex] == "X"  or self.lotList[int(spotRow)-1][colIndex] == "E":
                 return True
         else:
             print("ERROR: This spot doesn't exist. Please select another spot.")
